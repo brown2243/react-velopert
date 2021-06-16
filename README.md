@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# Chap.6 Redux
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 1. 리덕스 키워드 숙지
 
-## Available Scripts
+- #### 액션 (Action)
 
-In the project directory, you can run:
+  상태에 어떠한 변화가 필요하게 될 땐, 우리는 액션이란 것을 발생시킵니다. 이는, 하나의 객체로 표현되는데요, 액션 객체는 다음과 같은 형식으로 이뤄져있습니다.
+  액션 생성함수(Action Creator)는, 액션을 만드는 함수입니다. 단순히 파라미터를 받아와서 액션 객체 형태로 만들어주죠.
 
-### `yarn start`
+- #### 리듀서 (Reducer)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  리듀서는 변화를 일으키는 함수입니다. 리듀서는 두가지의 파라미터를 받아옵니다.
+  리듀서는, 현재의 상태와, 전달 받은 액션을 참고하여 새로운 상태를 만들어서 반환합니다.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- #### 스토어 (Store)
 
-### `yarn test`
+  리덕스에서는 한 애플리케이션당 하나의 스토어를 만들게 됩니다. 스토어 안에는, 현재의 앱 상태와, 리듀서가 들어가있고, 추가적으로 몇가지 내장 함수들이 있습니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- #### 디스패치 (dispatch)
 
-### `yarn build`
+  디스패치는 스토어의 내장함수 중 하나입니다. 디스패치는 액션을 발생 시키는 것 이라고 이해하시면 됩니다. dispatch 라는 함수에는 액션을 파라미터로 전달합니다.. dispatch(action) 이런식으로 말이죠.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- #### 구독 (subscribe)
+  구독 또한 스토어의 내장함수 중 하나입니다. subscribe 함수는, 함수 형태의 값을 파라미터로 받아옵니다. subscribe 함수에 특정 함수를 전달해주면, 액션이 디스패치 되었을 때 마다 전달해준 함수가 호출됩니다.
+  리액트에서 리덕스를 사용하게 될 때 보통 이 함수를 직접 사용하는 일은 별로 없습니다. 그 대신에 react-redux 라는 라이브러리에서 제공하는 connect 함수 또는 useSelector Hook 을 사용하여 리덕스 스토어의 상태에 구독합니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2. 리덕스의 세가지 규칙
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### 1. 하나의 애플리케이션 안에는 하나의 스토어가 있습니다.
 
-### `yarn eject`
+<br />
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### 2. 상태는 읽기전용 입니다.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br />
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### 3. 변화를 일으키는 함수, 리듀서는 순수한 함수여야 합니다.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+순수한 함수, 라는 개념이 익숙하지 않으시죠. 다음 사항을 기억해주세요.
 
-## Learn More
+- 리듀서 함수는 이전 상태와, 액션 객체를 파라미터로 받습니다.
+- 이전의 상태는 절대로 건들이지 않고, 변화를 일으킨 새로운 상태 객체를 만들어서 반환합니다.
+- 똑같은 파라미터로 호출된 리듀서 함수는 언제나 똑같은 결과값을 반환해야만 합니다.
+  3가지 사항을 주의해주세요. 동일한 인풋이라면 언제나 동일한 아웃풋이 있어야 합니다.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+그런데 일부 로직들 중에서는 실행 할 때마다 다른 결과값이 나타날 수도 있죠. new Date() 를 사용한다던지.. 랜덤 숫자를 생성한다던지.. 혹은, 네트워크에 요청을 한다던지! 그러한 작업은 결코 순수하지 않은 작업이므로, 리듀서 함수의 바깥에서 처리해줘야 합니다. 그런것을 하기 위해서, 리덕스 미들웨어 를 사용하곤 하죠.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 3. 리덕스 사용 할 준비
 
-### Code Splitting
+`$ yarn add redux`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 4. 리덕스 모듈 만들기
 
-### Analyzing the Bundle Size
+리듀서와 액션 관련 코드들을 하나의 파일에 몰아서 작성해보도록 하겠습니다. 이를 Ducks 패턴이라고 부릅니다. 리덕스 관련 코드를 분리하는 방식은 정해져있는 방식이 없으므로 나중에는 여러분이 자유롭게 분리하셔도 상관없습니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+우리는 현재 두가지의 리덕스 모듈을 만들었습니다. 그래서 리듀서도 두개죠. 한 프로젝트에 여러개의 리듀서가 있을때는 이를 한 리듀서로 합쳐서 사용합니다. 합쳐진 리듀서를 우리는 루트 리듀서라고 부릅니다.
 
-### Making a Progressive Web App
+리듀서를 합치는 작업은 리덕스에 내장되어있는 combineReducers라는 함수를 사용합니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+리액트 프로젝트에 리덕스를 적용 할 때에는 react-redux 라는 라이브러리를 사용해야합니다. 해당 라이브러리를 설치해주세요.
 
-### Advanced Configuration
+`$ yarn add react-redux`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+index.js 에서 Provider라는 컴포넌트를 불러와서 App 컴포넌트를 감싸주세요. 그리고 Provider의 props 에 store 를 넣어주세요.
 
-### Deployment
+Provider로 store를 넣어서 App 을 감싸게 되면 우리가 렌더링하는 그 어떤 컴포넌트던지 리덕스 스토어에 접근 할 수 있게 된답니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 5. 카운터 구현하기
 
-### `yarn build` fails to minify
+### 6. 리덕스 개발자도구 적용하기
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 7. 할 일 목록 구현하기
+
+### 8. useSelector 최적화
+
+### 9. connect 함수
+
+### 정리
