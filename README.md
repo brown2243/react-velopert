@@ -1,8 +1,8 @@
-# react-velopert
+# [react-velopert](https://react.vlpt.us/basic/) 를 참조하는 react 학습 및 복습
 
-https://react.vlpt.us/basic/ 를 참조하는 react 학습 및 복습
+시작 21/06/16 ~
 
-# 벨로퍼트 모던 리액트 학습 repository 입니다.
+- 06/16 chap.5 clear
 
 **Chapter별로 branch를 나눴습니다.**
 
