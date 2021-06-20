@@ -1,6 +1,6 @@
 # [react-velopert](https://react.vlpt.us/basic/) 를 참조하는 react 학습 및 복습
 
-시작 21/06/16 ~
+### 시작 21/06/16 ~
 
 - 06/16 chap.5 clear
 - 06/20 chap.6 clear
