@@ -47,7 +47,15 @@ Node Sass version 6.0.0 is incompatible with ^4.0.0 || ^5.0.0.
 
 scss 에서는 $blue: #228be6; 이런 식으로 스타일 파일에서 사용 할 수 있는 변수를 선언 할 수도 있고 lighten() 또는 darken() 과 같이 색상을 더 밝게하거나 어둡게 해주는 함수도 사용 할 수 있습니다.
 
-이번화는 버그가 많네. 그대로 따라해도 버튼의 텍스트가 위에 딱 붙어있다. 중요하지 않으니 pass
+이번화는 버그가 많네. 그대로 따라해도 버튼의 텍스트가 위에 딱 붙어있다.
+
+```
+justify-content: center;
+align-items: center;
+```
+
+아니 열심히 커밋한거 git config 회사계정이라 커밋로그에 기록이 안됐다.
+근데 그러면 회사계정꺼에는 기록해줘야지!!
 
 ## CSS Module
 
