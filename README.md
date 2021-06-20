@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# chap.2_styling
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Scss(Sass)
 
-## Available Scripts
+이미 알긴하는데 복습가즈아!
 
-In the project directory, you can run:
+```
+// 이런식으로 사용 함
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #333;
 
-### `yarn start`
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+react에서 scss를 사용하려면 eject 후 설정을 변경해야 하는데, 그냥 scss를 css로 변환 시켜주는 라이브러리 설치(나도 예전에 scss 컴파일러로 css 변환 후 사용했었음)
+`yarn add node-sass`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+./src/components/Button.scss (./node_modules/css-loader/dist/cjs.js??ref--5-oneOf-6-1!./node_modules/postcss-loader/src??postcss!./node_modules/resolve-url-loader??ref--5-oneOf-6-3!./node_modules/react-scripts/node_modules/sass-loader/dist/cjs.js??ref--5-oneOf-6-4!./src/components/Button.scss)
+Node Sass version 6.0.0 is incompatible with ^4.0.0 || ^5.0.0.
+```
 
-### `yarn test`
+에러 발생했는데, node-sass 버전이 바뀌면서 뭐가 변경됐나보다.
+스택보니까, sass-loader 설치하고 webpack.config에서 loader 추가해주는데 그냥 scss 컴파일러 vscode extension으로 다운받아 진행
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+{
+              test: sassModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 3,
+                  sourceMap: isEnvProduction
+                    ? shouldUseSourceMap
+                    : isEnvDevelopment,
+                  modules: {
+                    compileType: 'module',
+                    getLocalIdent: getCSSModuleLocalIdent,
+                  },
+                },
+                'sass-loader'  // 이거 추가해줌
+              ),
+            },
+```
 
-### `yarn build`
+scss 에서는 $blue: #228be6; 이런 식으로 스타일 파일에서 사용 할 수 있는 변수를 선언 할 수도 있고 lighten() 또는 darken() 과 같이 색상을 더 밝게하거나 어둡게 해주는 함수도 사용 할 수 있습니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+이번화는 버그가 많네. 그대로 따라해도 버튼의 텍스트가 위에 딱 붙어있다. 중요하지 않으니 pass
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## CSS Module
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## styled-component
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+CSS in JS와 CSS in CSS 사이에서 고민이다.
+현재 CSS in JS 인데, 거래소는 속도가 생명이니까 퍼포먼스가 많이 떨어진다면 CSS in CSS로 전환을 해야 할지도...
