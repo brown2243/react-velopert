@@ -7,6 +7,7 @@
 - 06/23 chap.2 clear
 - 07/22 chap.1 ~ chap.1.10
 - 07/24 chap.1.10 ~ chap.1.16
+- 07/25 chap.1 clear
 
 **Chapter별로 branch를 나눴습니다.**
 
@@ -14,7 +15,7 @@
 - chap.2 styling
 - chap.3 make_todolist
 - chap.4 API_connect
-- chap.5 router O
+- chap.5 router
 - chap.6 redux
 - chap.7 redux_middleware
 - chap.8 react_with_TS (TS는 아마 먼 미래에 할 지도...)
