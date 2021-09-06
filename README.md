@@ -8,6 +8,7 @@
 - 07/22 chap.1 ~ chap.1.10
 - 07/24 chap.1.10 ~ chap.1.16
 - 07/25 chap.1 clear
+- 09/06 chap.7.1 ~ 7.4
 
 **Chapter별로 branch를 나눴습니다.**
 
