@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+# chap.7_redux_middleware
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+7장. 리덕스 미들웨어
 
-## Available Scripts
+1. 리덕스 프로젝트 준비하기
 
-In the project directory, you can run:
+- 프로젝트 셋팅
 
-### `yarn start`
+2. 미들웨어 만들어보고 이해하기
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+리덕스 미들웨어의 템플릿
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+const middleware = store => next => action => {
+  // 하고 싶은 작업...
+}
+첫번째 store는 리덕스 스토어 인스턴스입니다. 이 안에 dispatch, getState, subscribe 내장함수들이 들어있죠.
 
-### `yarn test`
+두번째 next 는 액션을 다음 미들웨어에게 전달하는 함수입니다. next(action) 이런 형태로 사용합니다. 만약 다음 미들웨어가 없다면 리듀서에게 액션을 전달해줍니다. 만약에 next 를 호출하지 않게 된다면 액션이 무시처리되어 리듀서에게로 전달되지 않습니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+세번째 action 은 현재 처리하고 있는 액션 객체입니다.
+```
 
-### `yarn build`
+3. redux-logger 사용 및 미들웨어와 DevTools 함께 사용하기
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+이번에는 redux-logger 를 설치해서 적용을 해보고, 또 Redux DevTools 와 리덕스 미들웨어를 함께 사용해야 할 때에는 어떻게 해야하는지 배워보겠습니다.
+`yarn add redux-logger`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+const store = createStore(rootReducer, applyMiddleware(logger));
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Redux DevTools 사용하기
 
-### `yarn eject`
+```
+yarn add redux-devtools-extension
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+const store = createStore(reducer, composeWithDevTools(
+  applyMiddleware(...middleware),
+  // other store enhancers if any
+));
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4. redux-thunk
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+5. redux-thunk로 프로미스 다루기
 
-## Learn More
+6. API 재로딩 문제 해결하기
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+7. thunk에서 라우터 연동하기
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+8. json-server
 
-### Code Splitting
+9. CORS 와 Webpack DevServer Proxy
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+10. redux-saga
 
-### Analyzing the Bundle Size
+11. redux-saga 로 프로미스 다루기
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+12. saga에서 라우터 연동하기
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+정리
